@@ -6,7 +6,6 @@ from ._builtin import Page, WaitPage
 from .models import Constants, Player, Group, BaseGroup, BasePlayer, Portfolio_A, Portfolio_B
 
 class Decision (Page):
-
     form_fields = ["Portfolio"]
     form_model = Player
 

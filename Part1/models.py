@@ -36,15 +36,66 @@ class Constants(BaseConstants):
     asset_6 = [666, 66]
     asset_7 = [777, 77]
     asset_8 = [888, 88]
-    Asset_1={"Win": asset_1[0], "Lose":asset_1[1]}
-    Asset_2={"Win": asset_2[0], "Lose":asset_2[1]}
-    Asset_3 = {"Win": asset_3[0], "Lose": asset_3[1]}
-    Asset_4 = {"Win": asset_4[0], "Lose": asset_4[1]}
-    Asset_5 = {"Win": asset_5[0], "Lose": asset_5[1]}
-    Asset_6 = {"Win": asset_6[0], "Lose": asset_6[1]}
-    Asset_7 = {"Win": asset_7[0], "Lose": asset_7[1]}
-    Asset_8 = {"Win": asset_8[0], "Lose": asset_8[1]}
+    asset_9 = [999,99]
+    asset_10 = [1000,100]
+    asset_11 = [1111, 111]
+    asset_12 = [2222, 222]
+    assets = [
+        [111, 11],
+        [222, 22],
+        [333, 33],
+        [444, 44],
+        [555, 55],
+        [666, 66],
+        [777, 77],
+        [888, 88],
+        [999, 99],
+        [1000, 100],
+        [1111, 111],
+        [2222, 222],
+        [3333, 333],
+        [4444, 444],
+        [5555, 555],
+        [6666, 666],
+        [7777, 777],
+        [8888, 888],
+        [9999, 999],
+        [10000, 1000],
+    ]
+    Asset_1={"Win": assets[0][0], "Lose":assets[0][1]}
+    Asset_2={"Win": assets[1][0], "Lose":assets[1][1]}
+    Asset_3 = {"Win": assets[2][0], "Lose": assets[2][1]}
+    Asset_4 = {"Win": assets[3][0], "Lose": assets[3][1]}
+    Asset_5 = {"Win": assets[4][0], "Lose": assets[4][1]}
+    Asset_6 = {"Win": assets[5][0], "Lose": assets[5][1]}
+    Asset_7 = {"Win": assets[6][0], "Lose": assets[6][1]}
+    Asset_8 = {"Win": assets[7][0], "Lose": assets[7][1]}
+    Asset_9 = {"Win": assets[8][0], "Lose": assets[8][1]}
+    Asset_10 = {"Win": assets[9][0], "Lose": assets[9][1]}
+    Asset_11 = {"Win": assets[10][0], "Lose": assets[10][1]}
+    Asset_12 = {"Win": assets[11][0], "Lose": assets[11][1]}
+    Asset_13 = {"Win": assets[12][0], "Lose": assets[12][1]}
+    Asset_14 = {"Win": assets[13][0], "Lose": assets[13][1]}
+    Asset_15 = {"Win": assets[14][0], "Lose": assets[14][1]}
+    Asset_16 = {"Win": assets[15][0], "Lose": assets[15][1]}
+    Asset_17 = {"Win": assets[16][0], "Lose": assets[16][1]}
+    Asset_18 = {"Win": assets[17][0], "Lose": assets[17][1]}
+    Asset_19 = {"Win": assets[18][0], "Lose": assets[18][1]}
+    Asset_20 = {"Win": assets[19][0], "Lose": assets[19][1]}
 
+
+    Assets = (
+        (str(Asset_1), str(Asset_2)),
+        (str(Asset_3), str(Asset_4)),
+        (str(Asset_5), str(Asset_6)),
+        (str(Asset_7), str(Asset_8)),
+        (str(Asset_9), str(Asset_10)),
+        (str(Asset_11), str(Asset_12)),
+        (str(Asset_13), str(Asset_14)),
+        (str(Asset_15), str(Asset_16)),
+        (str(Asset_17), str(Asset_18)),
+        (str(Asset_19), str(Asset_20)),
+    )
 
     #Lotteriewahrscheinlichkeiten mit denen gewonnen oder verloren wird
     states=(20,80)
@@ -56,17 +107,18 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     pass
 
-Assets = (
-    str(Constants.Asset_1),str(Constants.Asset_2),str(Constants.Asset_3),str(Constants.Asset_4),str(Constants.Asset_5),str(Constants.Asset_6),str(Constants.Asset_7),str(Constants.Asset_8)
-)
 
-lotterieChoice = random.choice(list(Assets))
+chosenAssetPairs = []
 
-Lotterie1 =  random.choice(list(Assets))
-Lotterie2 = random.choice(list(Assets))
-while Lotterie1 == Lotterie2:
-    Lotterie2 = random.choice(list(Assets))
+def resetChosenAssetPairs():
+    print("resetted")
+    global chosenAssetPairs
+    chosenAssetPairs = []
 
+lotterieChoice = random.choice(list(Constants.Assets))
+
+Lotterie1 =  random.choice(lotterieChoice[0])
+Lotterie2 = random.choice(lotterieChoice[1])
 
 print("Lotterie 1 ist", Lotterie1)
 print("Lotterie 2 ist", Lotterie2)
@@ -98,31 +150,31 @@ else:
 
 correspondingasset1= 'asset_1'
 correspondingasset2= 'asset_2'
-
-
-
-
+roundcount = 0
 ####################################################################################################################################
 
 class Player(BasePlayer):
-
     #die funktion suecht neui asset pairs und tuet die denn de Variable Asset_1 und Asset_2 zuewiise. Damit werdeds gspeicheret
     def updateAssetPair(self):
-        firstAsset = random.choice(list(Assets))
-        secondAsset = random.choice(list(Assets))
-        while firstAsset == secondAsset:
-            secondAsset = random.choice(list(Assets))
+        global roundcount
+        if roundcount >= Constants.num_rounds-1:
+            resetChosenAssetPairs()
+            roundcount = 0
+        else:
+            roundcount +=1
+        assetPair = random.choice(list(Constants.Assets))
+        while chosenAssetPairs.__contains__(assetPair):
+            assetPair = random.choice(list(Constants.Assets))
+        chosenAssetPairs.append(assetPair)
+        firstAsset = assetPair[0]
+        secondAsset = assetPair[1]
         self.Asset_1 = firstAsset
         self.Asset_2 = secondAsset
         return [firstAsset,secondAsset]
 
-    # da werded d assetpairs inital und random gsetzt
-    first_initial_asset = models.CharField(initial=random.choice(list(Assets)))
-    second_initial_asset = models.CharField(initial=random.choice(list(Assets)))
 
-    #falls random die zwei gliche gsetzt werded tuet mer namal es neus zweits asset sueche
-    while first_initial_asset == second_initial_asset:
-        second_initial_asset = random.choice(list(Assets))
+    first_initial_asset = models.CharField(initial=None)
+    second_initial_asset = models.CharField(initial=None)
 
     Asset_1 = models.StringField(initial=first_initial_asset)
     Asset_2 = models.StringField(initial=second_initial_asset)
