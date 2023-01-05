@@ -1,0 +1,87 @@
+
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Control Question 2
+{% endblock %}
+
+{% block content %}
+<style>
+    /* draws line between table rows */
+    th, td{
+    border-bottom: 1px solid #ddd;
+    }
+</style>
+    <div class="alert alert-danger" id="error_message" style="visibility: hidden"></div>
+    <input type="hidden" name="counter_wrong2" id="counter_wrong" value="0">
+
+     
+    Assume that the CEO decides to leave all supervisors free in their decision whether or not they want to set the minimum transfer of 5 points. <p></p>
+
+    
+    </table>
+    <br>
+    <font size="4"> d) Now suppose the employee assigned to this supervisor decides to transfer 20 points. What income results from this transfer (ignoring the other supervisor-employee pair)? </font>  <br>
+    <br>
+    <table>
+        <tr>
+            <td> Points for the Employee </td>
+            <td><input type="integer" name="ControlQ15" id="ControlQ15" value="" min=0 max=1000000  ></td>
+        </tr>
+        <tr>
+            <td> Points for the CEO </td>
+            <td><input type="Integer" name="ControlQ16" id="ControlQ16" value="" min=0 max=10000000></td>
+        </tr>
+        <tr>
+            <td> Points for the Supervisor </td>
+            <td><input type="integer" name="ControlQ17" id="ControlQ17" value="" min=0 max =1000000 ></td>
+        </tr>
+    </table>
+    <br>
+    <font size="4"> e) Assume the other employee transfers 10 points. What is the total income of the CEO? </font> <br>
+    <br>
+    <table>
+        <tr>
+            <td> Total Income for the CEO </td>
+            <td><input type="integer" name="ControlQ18" id="ControlQ18" value="" min=0 max=1000000 ></td>
+        </tr>
+
+    </table>
+    <br><br>
+    <div align="right"><input type="submit" id="confirm" class="btn btn-primary" onclick="return check_answers();" value="Confirm"/></div>
+    <script>
+        var counter_wrong11 = 0;
+
+        function check_answers(){
+            var submit = false;
+
+            // get all answers
+
+            var question15 = document.getElementById('ControlQ15');
+            var question16 = document.getElementById('ControlQ16');
+            var question17 = document.getElementById('ControlQ17');
+            var question18 = document.getElementById('ControlQ18');
+
+
+           if(question15.value==100 && question16.value==20 && question17.value==40 && question18.value==30){
+                submit=true;
+
+           } else{
+                document.getElementById('error_message').innerHTML = "You did not answer the questions correctly. Please review your answers. If you have any questions, please contact us.";
+                document.getElementById('error_message').style = "visibility: visible";
+           }
+
+
+           /* if(!submit){
+                document.getElementById('error_message').innerHTML = "You did not answer the questions correctly. Please review your answers. If you have any questions, please contact us.";
+                document.getElementById('error_message').style = "visibility: visible";
+                document.getElementById ('counter_wrong11').setAttribute('value', counter_wrong2);
+
+            }*/
+            return submit;
+        }
+    </script>
+{% endblock %}
+
+

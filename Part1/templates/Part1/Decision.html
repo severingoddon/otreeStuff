@@ -1,0 +1,42 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% block title %}
+    Lotterie
+{% endblock %}
+{% block content %}
+
+
+<HR> <!-- fügt Linie ein -->
+<table>
+<tr>
+    <th width="200">Probability of state:</th>
+    <th width="200">State 1, Win: {{state_1}}%</th>
+    <th width="200">State 2, Lose: {{state_2}}%</th>
+</tr>
+<tr>
+<td>Lotterie 1</td>
+    <td> {%if player.correspondingasset1 == 'asset_1' %} {{Asset_1_state_1}} {%else%} {{Asset_2_state_1}} {%endif%}</td>
+    <td> {%if player.correspondingasset1 == 'asset_1'%} {{Asset_1_state_2}} {%else%} {{Asset_2_state_2}} {%endif%}</td>
+</tr>
+<tr>
+    <td>Lotterie 2</td>
+    <td>{%if player.correspondingasset2 == 'asset_2' %} {{Asset_2_state_1}} {%else%} {{Asset_1_state_1}} {%endif%}</td>
+    <td>{%if player.correspondingasset2 == 'asset_2' %} {{Asset_2_state_2}} {%else%} {{Asset_1_state_2}} {%endif%}</td> 
+</tr> 
+</table> 
+<HR>
+
+
+<p> 
+    Which portfolio do you choose?
+</p>
+
+<table>
+<tr><th width="200">Portfolio A</th> <th width="200">Portfolio B</th></tr>
+<td>{{correspondinglotteryA}}</td><td>{{correspondinglotteryB}}</td></table>
+<HR>
+<p> 
+{% formfield player.Portfolio label='Choice Portfolio' %}
+
+{% next_button %}
+{% endblock %}

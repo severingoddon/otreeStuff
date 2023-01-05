@@ -1,0 +1,15 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% block title %}
+    Control Questions
+{% endblock %}
+{% block content %}
+<p> 
+    You have answered all control questions correctly. <br>
+    <br>
+    You can now proceed to Part 1 of the study and take your decisions.
+</p>
+
+    {% next_button %}
+
+{% endblock %}

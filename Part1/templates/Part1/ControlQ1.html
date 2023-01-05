@@ -1,0 +1,96 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Control Question 1
+{% endblock %}
+
+{% block content %}
+<style>
+    /* draws line between table rows */
+    th, td{
+    border-bottom: 1px solid #ddd;
+    }
+</style>
+    <div class="alert alert-danger" id="error_message" style="visibility: hidden"></div>
+    <input type="hidden" name="counter_wrong1" id="counter_wrong" value="0">
+
+    Assume that the CEO decides to leave all supervisors free in their decision whether or not they want to set the minimum transfer of 5 points. <p></p>
+    
+    <font size="4">a) What choices do supervisors have in selecting the minimum transfer for their assigned employee in this case?</font> <br><br>
+    <table>
+        <tr>
+            <td><input type="radio" name="ControlQ1" value="0" ></td>
+            <td> No choice</td>
+        </tr>
+        <tr>
+            <td><input type="radio" name="ControlQ1" value="0"></td>
+            <td>The choice whether to set a minimum transfer of 5 points for her/his employee or whether to let the employee decide completely freely about her/his transfer.  </td>
+           
+        </tr>
+
+    </table>
+    <br>
+    <br>
+    <font size="4">b) Suppose a supervisor decides not to set a minimum transfer for his/her employee. The employee assigned to this supervisor decides to transfer 5 points. What income results from this transfer (ignoring the other supervisor-employee pair)?</font>  <br>
+    <br>
+    <table>
+        <tr>
+            <td>Points for the Employee: </td>
+            <td><input type="number"  name="ControlQ11" id="ControlQ11" value="" min=0 max=1000000></td>
+        </tr>
+        <tr>
+            <td>Points for the CEO: </td>
+            <td><input type="number" name="ControlQ12" id="ControlQ12" value="" min=0 max=1000000 ></td>
+        </tr>
+        <tr>
+            <td>Points for the Supervisor: </td>
+            <td><input type="number" name="ControlQ13" id="ControlQ13" value="" min=0 max=1000000 ></td>
+        </tr>
+    </table>
+    <br>
+    <br>
+ <p></p>
+    <font size="4"> c) Assume the other employee transfers 50 points. What is the total income of the CEO?</fond> <br>
+    <br>
+    <table>
+        <tr>
+            <td> <font size="3">Total income for the CEO: </font> </td>
+            <td><input type="integer" name="ControlQ14" id="ControlQ14" value="" min=0 max=1000000 ></td>
+        </tr>
+
+    </table>
+    <br>
+    <div align="right"><input type="submit" id="confirm" class="btn btn-primary" onclick="return check_answers();" value="Confirm"/></div>
+    <script>
+        var counter_wrong1 = 0;
+        function check_answers(){
+            var submit = false;
+            var counter_wrong1 = 0;
+            // get all answers
+            var question1=document.getElementsByName('ControlQ1');
+            var question11=document.getElementById('ControlQ11');
+            var question12=document.getElementById('ControlQ12');
+            var question13=document.getElementById('ControlQ13');
+            var question14=document.getElementById('ControlQ14');
+            // correct answers are:
+            // control_question1: 2nd answer is true
+            if(question1[1].checked==true && question11.value==115 && question12.value==5 && question13.value==10 && question14.value==55){
+                submit = true;
+            }else{
+                counter_wrong1 = counter_wrong1 + 1;
+                submit = false;
+            }
+
+            if(!submit){
+                document.getElementById('error_message').innerHTML = "You did not answer the questions correctly. Please review your answers. If you have any questions, please contact us.";
+                document.getElementById('error_message').style = "visibility: visible";
+                //document.getElementById("counter_wrong1").setAttribute('value', counter_wrong1);
+            }
+
+            return submit;
+        }
+    </script>
+
+
+{% endblock %}
